@@ -8,18 +8,55 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var pickedImageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        var image : UIImage!
+        
+        if let img = info[UIImagePickerControllerEditedImage] as? UIImage
+        {
+            image = img
+        }
+        else if let img = info[UIImagePickerControllerOriginalImage] as? UIImage
+        {
+            image = img
+        }
+        
+        pickedImageView.image = image
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func pickAnImage(_ sender:Any) {
+        
+        let pickerController = UIImagePickerController()
+        pickerController.allowsEditing = true
+        pickerController.delegate = self
+        
+        if (sender as! UIBarButtonItem).tag == 0 {
+            pickerController.sourceType = .camera
+        } else {
+            pickerController.sourceType = .photoLibrary
+        }
+        
+        present(pickerController, animated: true, completion: nil)
+        
     }
-
-
 }
 
