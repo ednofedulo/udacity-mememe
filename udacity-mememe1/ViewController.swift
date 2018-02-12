@@ -36,30 +36,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         var memedImage: UIImage!
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
-        self.view.bringSubview(toFront: topTextField)
-        self.view.bringSubview(toFront: bottomTextField)
-        self.view.bringSubview(toFront: navigationBar)
+        shareButton.isEnabled = pickedImageView.image != nil
         
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        topTextField.textAlignment = .center
-        bottomTextField.textAlignment = .center
-        topTextField.delegate = textFieldDelegate
-        bottomTextField.delegate = textFieldDelegate
+        configureTextField(textField: topTextField)
+        configureTextField(textField: bottomTextField)
         
         subscribeToKeyboardNotifications()
-        if pickedImageView.image == nil {
-            shareButton.isEnabled = false
-        }
+    }
+    
+    func configureTextField(textField: UITextField) {
+        self.view.bringSubview(toFront: textField)
+        textField.defaultTextAttributes = memeTextAttributes
+        textField.textAlignment = .center
+        textField.delegate = textFieldDelegate
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,18 +63,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        var image : UIImage!
         
-        if let img = info[UIImagePickerControllerEditedImage] as? UIImage
-        {
-            image = img
-        }
-        else if let img = info[UIImagePickerControllerOriginalImage] as? UIImage
-        {
-            image = img
-        }
+        let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage
+        let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         
-        pickedImageView.image = image
+        pickedImageView.image = (editedImage != nil ? editedImage : originalImage)
         shareButton.isEnabled = true
         picker.dismiss(animated: true, completion: nil)
     }
@@ -147,7 +134,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @objc func keyboardWillShow(_ notification:Notification) {
         
         if bottomTextField.isFirstResponder {
-            view.frame.origin.y = 0 - getKeyboardHeight(notification)
+            view.frame.origin.y = -getKeyboardHeight(notification)
         }
     }
     
@@ -171,9 +158,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func unsubscribeFromKeyboardNotifications() {
-        
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

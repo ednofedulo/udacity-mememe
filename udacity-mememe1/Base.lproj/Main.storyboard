@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Meme Me 1.0" id="RJh-g9-jlW">
-                                        <barButtonItem key="leftBarButtonItem" image="ic_share" id="Wtx-1r-7dw" userLabel="ShareButton">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="action" id="Wtx-1r-7dw" userLabel="ShareButton">
                                             <connections>
                                                 <action selector="share:" destination="BYZ-38-t0r" id="0Tu-1p-FFh"/>
                                             </connections>
@@ -36,7 +36,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="SA8-O3-uyH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="SA8-O3-uyH">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" red="0.75406885150000003" green="0.75408679249999999" blue="0.75407713649999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </imageView>
@@ -108,6 +108,5 @@
     <resources>
         <image name="ic_camera_alt" width="24" height="24"/>
         <image name="ic_photo_library" width="24" height="24"/>
-        <image name="ic_share" width="24" height="24"/>
     </resources>
 </document>
