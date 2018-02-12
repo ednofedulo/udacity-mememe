@@ -15,4 +15,9 @@ class TextFieldDelegate : NSObject, UITextFieldDelegate {
             textField.text = ""
         }
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
