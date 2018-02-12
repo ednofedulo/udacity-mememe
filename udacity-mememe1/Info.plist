@@ -38,6 +38,8 @@
 	<string>Just Testing!</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Just Testing!</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Just Testing!</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
