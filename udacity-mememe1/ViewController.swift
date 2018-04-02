@@ -18,6 +18,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var toolBar: UIToolbar!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
     //MARK: TextField Attributes
     let memeTextAttributes:[String:Any] = [
@@ -29,12 +30,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let textFieldDelegate = TextFieldDelegate()
     
     //MARK: Meme Struct
-    struct Meme {
-        var topText: String!
-        var bottomText: String!
-        var originalImage: UIImage!
-        var memedImage: UIImage!
-    }
+    var meme: Meme!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -99,6 +95,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         activityViewController.completionWithItemsHandler = {(activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             if completed {
                 self.save(memedImage: memedImage)
+                self.dismiss()
             }
         }
         
@@ -107,7 +104,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func save(memedImage: UIImage) {
         
-        _ = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: pickedImageView.image!, memedImage: memedImage)
+        let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: pickedImageView.image!, memedImage: memedImage)
+        
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func generateMemedImage() -> UIImage {
@@ -142,6 +143,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         if bottomTextField.isFirstResponder {
             view.frame.origin.y = 0
         }
+    }
+    
+    @IBAction func cancelButtonClicked(_ sender: Any) {
+        dismiss()
+    }
+    
+    func dismiss(){
+        dismiss(animated: true, completion: nil)
     }
     
     func getKeyboardHeight(_ notification:Notification) -> CGFloat {
