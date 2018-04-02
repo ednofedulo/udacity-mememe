@@ -75,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func pickAnImage(_ sender:Any) {
         
         let pickerController = UIImagePickerController()
-        pickerController.allowsEditing = true
+        pickerController.allowsEditing = false
         pickerController.delegate = self
         
         if (sender as! UIBarButtonItem).tag == 0 {
@@ -116,7 +116,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         toggleBars()
         
         UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawHierarchy(in: self.pickedImageView.frame, afterScreenUpdates: true)
+        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
